@@ -1,4 +1,5 @@
 import { Player } from './Player.js';
+import {Menu} from './Menu.js'
 import {Carrier} from './Carrier.js'
 import {EnemyFighter } from './EnemyFighter.js';
 
@@ -32,7 +33,7 @@ window.addEventListener('load', function () {
 		},
 		autoFocus: true,
 		canvasStyle: 'display: block; width: 100%; height: 100%',
-		scene: [Game]
+		scene: [Menu]
 	});
 	// game.scene.add("Game", Game, true);
 });
@@ -71,10 +72,11 @@ class Game extends Phaser.Scene {
 		//Scale the player
 		carrier = new Carrier(this, SETTINGS.carrierX, SETTINGS.carrierY, 'carrier',)
 		console.log(carrier.hp)
-		// this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
+		//this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		// playerSprite.setScale(SETTINGS.planesScale)
 		// Create player object
-		// player = this.physics.add.sprite(new Player(this, 100, 450));
+		player = new Player(this, 300, 300).setScale(SETTINGS.planesScale).refreshBody();
+		
 
 		this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
