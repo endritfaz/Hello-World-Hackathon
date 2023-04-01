@@ -41,6 +41,7 @@ window.addEventListener('load', function () {
 let carrier
 let updateObjects = []
 let player
+let testEnemyFighter
 class Game extends Phaser.Scene {
 	preload() {
 		//Importing all the files
@@ -79,12 +80,14 @@ class Game extends Phaser.Scene {
 		player = new Player(this, 300, 300).setScale(SETTINGS.planesScale).refreshBody();
 		
 
-		this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
-		this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
+		// this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
+		// this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
 		this.add.image(500,500,'player-missile').setScale(SETTINGS.missileScale)
-		updateObjects.push(new EnemyFighter(this,600,600,'enemy-fighter',).setScale(SETTINGS.planesScale))
+		testEnemyFighter = new EnemyFighter(this,300,50,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale)
+		// updateObjects.push(new EnemyFighter(this,400,400,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale))
 		
 	}
 	update(){
+		testEnemyFighter.update()
 	}
 }
