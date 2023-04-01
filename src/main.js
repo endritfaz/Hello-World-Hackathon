@@ -2,7 +2,7 @@ import { Player } from './Player.js';
 import {Menu} from './Menu.js'
 import {Carrier} from './Carrier.js'
 import {EnemyFighter } from './EnemyFighter.js';
-//import {HealthBar} from './HealthBar.js';
+import {HealthBar} from './HealthBar.js';
 //import { gameOver } from './gameOver';
 const SETTINGS = {
 	planesScale: 0.2,
@@ -87,7 +87,10 @@ class Game extends Phaser.Scene {
 		this.add.image(500,500,'player-missile').setScale(SETTINGS.missileScale)
 		testEnemyFighter = new EnemyFighter(this,100,50,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY, SETTINGS.enemyFigherSpeed).setScale(SETTINGS.planesScale)
 		// updateObjects.push(new EnemyFighter(this,400,400,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale))
-		
+
+		// healthbar
+		const hbar = new HealthBar(this, 30,650)
+		hbar.draw()
 	}
 	update(){
 		testEnemyFighter.update()
