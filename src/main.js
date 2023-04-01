@@ -1,17 +1,20 @@
 import { Player } from './Player.js';
-// import {Menu} from './Menu.js'
+import {Menu} from './Menu.js'
 import {Carrier} from './Carrier.js'
 import {EnemyFighter } from './EnemyFighter.js';
 import {HealthBar} from './HealthBar.js';
 import { Waves } from './waves.js';
-//import { gameOver } from './gameOver';
-import { ShootManager } from './ShootManager.js';
+import { gameOver } from './gameOver.js';
 const SETTINGS = {
 	planesScale: 0.2,
 	missileScale: 0.05,
 	carrierX: 1280,
 	carrierY: 1280,
 	enemyFigherSpeed: 10,
+	carrierX: 300,
+	carrierY: 300,
+	enemyFigherSpeed: 0,
+	enemyFighterRange: 180,
 }
 window.addEventListener('load', function () {
 	var game = new Phaser.Game({
@@ -19,7 +22,7 @@ window.addEventListener('load', function () {
 		width: 800,
 		height: 600,
 		type: Phaser.AUTO,
-        backgroundColor: "#1A0189",
+        backgroundColor: "#CA8F16",
 		scale: {
 			mode: Phaser.Scale.ScaleModes.NONE,
 			width: this.window.innerWidth,
@@ -37,10 +40,9 @@ window.addEventListener('load', function () {
 		},
 		autoFocus: true,
 		canvasStyle: 'display: block; width: 100%; height: 100%',
-		// scene: [
-		// 	Menu, Game
-		// ]
-		scene:[Game]
+		scene: [
+			gameOver,Menu, Game
+		]
 	});
 	
 });
@@ -49,7 +51,6 @@ let carrier
 let updateObjects = []
 let player
 let testEnemyFighter
-let shootManager
 class Game extends Phaser.Scene {
 	constructor(){
 		super('Game')
@@ -63,9 +64,8 @@ class Game extends Phaser.Scene {
 		this.load.image('player', 'sprites/player.png')
 		this.load.image('enemy-fighter','sprites/enemy-fighter.png')
 		this.load.image('enemy-bomber','sprites/enemy-bomber.png')
-		this.load.image('player-missile','sprites/player-missile.png')
+		this.load.image('player-missile.png','sprites/player-missile.png')
 		this.load.image('bullet','sprites/bullet.png')
-		this.load.image('enemy-missile','sprites/enemy-missile.png')
 		//loading the tilemap
 		this.load.image({
 			key:'tiles',
@@ -93,20 +93,22 @@ class Game extends Phaser.Scene {
 		console.log(carrier.hp)
 		//this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		// playerSprite.setScale(SETTINGS.planesScale)
-		
 		// Create player object
 		player = new Player(this, SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale).refreshBody()
+		shootManager = new ShootManager(this, SETTINGS.missileScale)
+		player = new Player(this, 300, 300).setScale(SETTINGS.planesScale).refreshBody().setRotation(Math.PI/2);
 		
 
 		// this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		// this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
-		this.add.image(500,500,'player-missile').setScale(SETTINGS.missileScale)
-		testEnemyFighter = new EnemyFighter(this,200,200,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY, SETTINGS.enemyFigherSpeed).setScale(SETTINGS.planesScale)
+		testEnemyFighter = new EnemyFighter(this,200,200,'enemy-fighter',
+		SETTINGS.carrierX, SETTINGS.carrierY,
+		 SETTINGS.enemyFigherSpeed, SETTINGS.enemyFighterRange, shootManager).setScale(SETTINGS.planesScale)
 		// updateObjects.push(new EnemyFighter(this,400,400,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale))
 
 		// healthbar (add a decrease function for each plane)
-		// const hbar = new HealthBar(this, 30,650)
-		// hbar.draw()
+		const hbar = new HealthBar(this, 30,650)
+		hbar.draw()
 
 		//wavebar (change as per wave)
 		
@@ -121,8 +123,5 @@ class Game extends Phaser.Scene {
 		// Make the camera follow the player 
 		this.cameras.main.startFollow(player)
 		testEnemyFighter.update()
-		if (this.input.keyboard.addKey('A').isDown){
-			shootManager.fireEnemyMissile(50,50,10,1,SETTINGS.missileScale)
-		}
 	}
 }
