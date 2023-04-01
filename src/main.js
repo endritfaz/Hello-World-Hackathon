@@ -9,8 +9,8 @@ import { ShootManager } from './ShootManager.js';
 const SETTINGS = {
 	planesScale: 0.2,
 	missileScale: 0.05,
-	carrierX: 300,
-	carrierY: 300,
+	carrierX: 1280,
+	carrierY: 1280,
 	enemyFigherSpeed: 10,
 }
 window.addEventListener('load', function () {
@@ -81,20 +81,21 @@ class Game extends Phaser.Scene {
 										tileWidth: 32,
 										tileHeight: 32})
 		this.tileset = this.map.addTilesetImage('ocean','tiles')
-		// the screen is a square with center at (1280,1280)
-		var SCREEN_CENTRE = 1280;
+		
 
+		// Centres the camera
+		this.cameras.main.centerOn(SETTINGS.carrierX, SETTINGS.carrierY)
+		
 		this.groundLayer = this.map.createLayer('Ground',this.tileset,0,0)
 		
 		//Scale the player
-		carrier = new Carrier(this, SETTINGS.carrierX, SETTINGS.carrierY, 'carrier',)
+		carrier = new Carrier(this, SETTINGS.carrierX, SETTINGS.carrierY, 'carrier')
 		console.log(carrier.hp)
 		//this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		// playerSprite.setScale(SETTINGS.planesScale)
 		
 		// Create player object
-		player = new Player(this, 1280, 1280).setScale(SETTINGS.planesScale).refreshBody().setRotation(Math.PI/2);
-		
+		player = new Player(this, SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale).refreshBody()
 		
 
 		// this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
@@ -108,13 +109,17 @@ class Game extends Phaser.Scene {
 		// hbar.draw()
 
 		//wavebar (change as per wave)
+		
+		/*
 		const wbar = new Waves(this, 1)
 		wbar.draw()
 		shootManager = new ShootManager(this, SETTINGS.missileScale)
-
+		*/
 	}
 	update(){
 		player.update();
+		// Make the camera follow the player 
+		this.cameras.main.startFollow(player)
 		testEnemyFighter.update()
 		if (this.input.keyboard.addKey('A').isDown){
 			shootManager.fireEnemyMissile(50,50,10,1,SETTINGS.missileScale)
