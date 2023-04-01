@@ -1,5 +1,6 @@
 import { Player } from './Player.js';
 import {Menu} from './Menu.js'
+import { gameOver } from './gameOver';
 const SETTINGS = {
 	planesScale: 0.2,
 	missileScale: 0.05,
@@ -28,7 +29,7 @@ window.addEventListener('load', function () {
 		},
 		autoFocus: true,
 		canvasStyle: 'display: block; width: 100%; height: 100%',
-		scene: [Game]
+		scene: [gameOver]
 	});
 	// game.scene.add("Game", Game, true);
 });
