@@ -15,7 +15,7 @@ export class EnemyFighter extends Phaser.Physics.Arcade.Sprite {
         this.body.setVelocity(this.vector.x, this.vector.y)
     }
     update(){
-        
+        console.log("X:", this.position.x, "Y:", this.position.y)
     }
     shoot(){
         
