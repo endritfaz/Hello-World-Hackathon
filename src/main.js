@@ -76,15 +76,16 @@ class Game extends Phaser.Scene {
 		//this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		// playerSprite.setScale(SETTINGS.planesScale)
 		// Create player object
-		player = new Player(this, 300, 300).setScale(SETTINGS.planesScale).refreshBody();
+		player = new Player(this, 300, 300).setScale(SETTINGS.planesScale).refreshBody().setRotation(Math.PI/2);
 		
-
-		this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
 		this.add.image(500,500,'player-missile').setScale(SETTINGS.missileScale)
 		updateObjects.push(new EnemyFighter(this,600,600,'enemy-fighter',).setScale(SETTINGS.planesScale))
+
+		
 		
 	}
-	update(){
+	update() {
+		player.update();
 	}
 }
