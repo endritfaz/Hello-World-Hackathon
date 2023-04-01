@@ -7,10 +7,10 @@ import { Waves } from './waves.js';
 import { gameOver } from './gameOver.js';
 const SETTINGS = {
 	planesScale: 0.2,
-	missileScale: 0.05,
 	carrierX: 300,
 	carrierY: 300,
 	enemyFigherSpeed: 0,
+	enemyFighterRange: 180,
 }
 window.addEventListener('load', function () {
 	var game = new Phaser.Game({
@@ -85,13 +85,15 @@ class Game extends Phaser.Scene {
 		//this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		// playerSprite.setScale(SETTINGS.planesScale)
 		// Create player object
+		shootManager = new ShootManager(this, SETTINGS.missileScale)
 		player = new Player(this, 300, 300).setScale(SETTINGS.planesScale).refreshBody().setRotation(Math.PI/2);
 		
 
 		// this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		// this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
-		this.add.image(500,500,'player-missile').setScale(SETTINGS.missileScale)
-		testEnemyFighter = new EnemyFighter(this,200,200,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY, SETTINGS.enemyFigherSpeed).setScale(SETTINGS.planesScale)
+		testEnemyFighter = new EnemyFighter(this,200,200,'enemy-fighter',
+		SETTINGS.carrierX, SETTINGS.carrierY,
+		 SETTINGS.enemyFigherSpeed, SETTINGS.enemyFighterRange, shootManager).setScale(SETTINGS.planesScale)
 		// updateObjects.push(new EnemyFighter(this,400,400,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale))
 
 		// healthbar (add a decrease function for each plane)
@@ -100,9 +102,11 @@ class Game extends Phaser.Scene {
 
 		//wavebar (change as per wave)
 		const wbar = new Waves(this, 1)
-		wbar.draw()
+		// wbar.draw()
+
 	}
 	update(){
-	    testEnemyFighter.update();
+		player.update();
+		testEnemyFighter.update()
 	}
 }

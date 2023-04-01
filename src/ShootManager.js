@@ -1,15 +1,20 @@
+const SETTINGS = {
+    enemyMissileScale: 0.05,
+    enemyMissileSpeed: 10,
+}
 export class EnemyMissile extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, x, y){
         super(scene, x, y, 'enemy-missile')
     }
-    fire (x,y,rot, velocity, scale){
+    fire (x,y,rot, vector, scale){
         this.body.reset(x,y)
         this.setScale(scale)
         this.setBodySize(150,150)
         this.rotation = rot
         this.setActive(true)
         this.setVisible(true)
-        this.setVelocity(velocity)
+        vector.setLength(SETTINGS.enemyMissileSpeed)
+        this.setVelocity(vector.x, vector.y)
     }
     destroySelf(){
         this.setActive(false)
@@ -28,12 +33,12 @@ export class ShootManager extends Phaser.Physics.Arcade.Group{
             classType: EnemyMissile
         })
     }
-    fireEnemyMissile(x,y,rot,velocity, scale){
+    fireEnemyMissile(x,y,rot, vector){
         const enemyMissile = this.getFirstDead(false)
         //Checks if enemyMissile is null
         if (enemyMissile){
-            console.log("Enemy missile away")
-            enemyMissile.fire(x,y,rot,velocity, scale)
+            console.log("Enemy missile away",x,y,rot, vector)
+            enemyMissile.fire(x,y,rot, vector, SETTINGS.enemyMissileScale)
         }
     }
 }
