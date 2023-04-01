@@ -37,12 +37,14 @@ class Game extends Phaser.Scene {
 		//Importing all the files
 		console.log("Preload in Game called")
 		this.load.baseURL = 'assets/'
+		//
 		this.load.image('carrier','sprites/carrier.png')
-		this.load.image('player', 'sprites/carrier')
+		this.load.image('player', 'sprites/player.png')
 	}
 	create (){
 		console.log("Create in Game called")
 		//Scale the player
+		this.add.image(150,150, 'carrier')
 		let playerSprite = this.add.image(300,300,'player')
 		playerSprite.setScale(SETTINGS.planesScale)
 		
