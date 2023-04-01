@@ -1,4 +1,5 @@
-import Player from {}
+import { Player } from './Player.js';
+
 const SETTINGS = {
 	planesScale: 0.2,
 	missileScale: 0.05,
