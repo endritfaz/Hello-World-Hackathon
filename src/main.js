@@ -3,6 +3,7 @@ import {Menu} from './Menu.js'
 import {Carrier} from './Carrier.js'
 import {EnemyFighter } from './EnemyFighter.js';
 import {HealthBar} from './HealthBar.js';
+import { Waves } from './waves.js';
 //import { gameOver } from './gameOver';
 const SETTINGS = {
 	planesScale: 0.2,
@@ -93,9 +94,13 @@ class Game extends Phaser.Scene {
 		testEnemyFighter = new EnemyFighter(this,100,50,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY, SETTINGS.enemyFigherSpeed).setScale(SETTINGS.planesScale)
 		// updateObjects.push(new EnemyFighter(this,400,400,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale))
 
-		// healthbar
+		// healthbar (add a decrease function for each plane)
 		const hbar = new HealthBar(this, 30,650)
 		hbar.draw()
+
+		//wavebar (change as per wave)
+		const wbar = new Waves(this, 1)
+		wbar.draw()
 	}
 	update(){
 		testEnemyFighter.update()
