@@ -1,8 +1,7 @@
 export class EnemyFighter extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, xPos, yPos, texture, scale, frame){
+    constructor(scene, xPos, yPos, texture, frame){
         super(scene, xPos, yPos, texture, frame)
-        let figherSprite = scene.add.existing(this)
-        figherSprite.setScale(scale)
+       scene.add.existing(this)
         scene.physics.add.existing(this)
         this.hp = 1
         this.setBodySize(180,40)

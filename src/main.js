@@ -40,6 +40,7 @@ window.addEventListener('load', function () {
 
 let carrier
 let updateObjects = []
+let player
 class Game extends Phaser.Scene {
 	preload() {
 		//Importing all the files
@@ -64,8 +65,8 @@ class Game extends Phaser.Scene {
 		console.log("Create in Game called")
 		//Loading the tilemap
 		this.map = this.make.tilemap({key: 'ocean',
-	tileWidth: 32,
-	tileHeight: 32})
+										tileWidth: 32,
+										tileHeight: 32})
 		this.tileset = this.map.addTilesetImage('ocean','tiles')
 		this.groundLayer = this.map.createLayer('Ground',this.tileset,0,0)
 		
@@ -81,7 +82,7 @@ class Game extends Phaser.Scene {
 		this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
 		this.add.image(500,500,'player-missile').setScale(SETTINGS.missileScale)
-		updateObjects.push(new EnemyFighter(this,600,600,'enemy-fighter',),SETTINGS.planesScale)
+		updateObjects.push(new EnemyFighter(this,600,600,'enemy-fighter',).setScale(SETTINGS.planesScale))
 		
 	}
 	update(){
