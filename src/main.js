@@ -59,7 +59,8 @@ class Game extends Phaser.Scene {
 		this.map = this.make.tilemap({key: 'ocean',
 	tileWidth: 32,
 	tileHeight: 32})
-	
+		this.tileset = this.map.addTilesetImage('ocean','tiles')
+		this.groundLayer = this.map.createLayer('Ground',this.tileset,0,0)
 		
 		//Scale the player
 		this.add.image(150,150, 'carrier')
