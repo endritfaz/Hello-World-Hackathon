@@ -1,15 +1,17 @@
 import { Player } from './Player.js';
-import {Menu} from './Menu.js'
+// import {Menu} from './Menu.js'
 import {Carrier} from './Carrier.js'
 import {EnemyFighter } from './EnemyFighter.js';
 import {HealthBar} from './HealthBar.js';
+import { Waves } from './waves.js';
 //import { gameOver } from './gameOver';
+import { ShootManager } from './ShootManager.js';
 const SETTINGS = {
 	planesScale: 0.2,
 	missileScale: 0.05,
 	carrierX: 300,
 	carrierY: 300,
-	enemyFigherSpeed: 0,
+	enemyFigherSpeed: 10,
 }
 window.addEventListener('load', function () {
 	var game = new Phaser.Game({
@@ -35,9 +37,10 @@ window.addEventListener('load', function () {
 		},
 		autoFocus: true,
 		canvasStyle: 'display: block; width: 100%; height: 100%',
-		scene: [
-			Menu, Game
-		]
+		// scene: [
+		// 	Menu, Game
+		// ]
+		scene:[Game]
 	});
 	
 });
@@ -46,6 +49,7 @@ let carrier
 let updateObjects = []
 let player
 let testEnemyFighter
+let shootManager
 class Game extends Phaser.Scene {
 	constructor(){
 		super('Game')
@@ -59,8 +63,9 @@ class Game extends Phaser.Scene {
 		this.load.image('player', 'sprites/player.png')
 		this.load.image('enemy-fighter','sprites/enemy-fighter.png')
 		this.load.image('enemy-bomber','sprites/enemy-bomber.png')
-		this.load.image('player-missile.png','sprites/player-missile.png')
+		this.load.image('player-missile','sprites/player-missile.png')
 		this.load.image('bullet','sprites/bullet.png')
+		this.load.image('enemy-missile','sprites/enemy-missile.png')
 		//loading the tilemap
 		this.load.image({
 			key:'tiles',
@@ -98,12 +103,21 @@ class Game extends Phaser.Scene {
 		testEnemyFighter = new EnemyFighter(this,200,200,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY, SETTINGS.enemyFigherSpeed).setScale(SETTINGS.planesScale)
 		// updateObjects.push(new EnemyFighter(this,400,400,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale))
 
-		// healthbar
-		const hbar = new HealthBar(this, 30,650)
-		hbar.draw()
+		// healthbar (add a decrease function for each plane)
+		// const hbar = new HealthBar(this, 30,650)
+		// hbar.draw()
+
+		//wavebar (change as per wave)
+		const wbar = new Waves(this, 1)
+		wbar.draw()
+		shootManager = new ShootManager(this, SETTINGS.missileScale)
+
 	}
 	update(){
 		player.update();
 		testEnemyFighter.update()
+		if (this.input.keyboard.addKey('A').isDown){
+			shootManager.fireEnemyMissile(50,50,10,1,SETTINGS.missileScale)
+		}
 	}
 }
