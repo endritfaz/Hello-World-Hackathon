@@ -1,8 +1,12 @@
 import { Player } from './Player.js';
+import {Carrier} from './Carrier.js'
+import {EnemyFighter } from './EnemyFighter.js';
 
 const SETTINGS = {
 	planesScale: 0.2,
 	missileScale: 0.05,
+	carrierX: 300,
+	carrierY: 300,
 }
 window.addEventListener('load', function () {
 	var game = new Phaser.Game({
@@ -33,7 +37,8 @@ window.addEventListener('load', function () {
 	// game.scene.add("Game", Game, true);
 });
 
-
+let carrier
+let updateObjects = []
 class Game extends Phaser.Scene {
 	preload() {
 		//Importing all the files
@@ -64,25 +69,19 @@ class Game extends Phaser.Scene {
 		this.groundLayer = this.map.createLayer('Ground',this.tileset,0,0)
 		
 		//Scale the player
-		this.add.image(150,150, 'carrier')
+		carrier = new Carrier(this, SETTINGS.carrierX, SETTINGS.carrierY, 'carrier',)
+		console.log(carrier.hp)
 		// this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		// playerSprite.setScale(SETTINGS.planesScale)
-
-
-
-
-
-
 		// Create player object
 		// player = this.physics.add.sprite(new Player(this, 100, 450));
 
 		this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
 		this.add.image(500,500,'player-missile').setScale(SETTINGS.missileScale)
-		
+		updateObjects.push(new EnemyFighter(this,600,600,'enemy-fighter',),SETTINGS.planesScale)
 		
 	}
 	update(){
-
 	}
 }
