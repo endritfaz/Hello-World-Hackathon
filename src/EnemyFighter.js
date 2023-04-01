@@ -1,6 +1,7 @@
 export class EnemyFighter extends Phaser.Physics.Arcade.Sprite {
     target = 0
-    constructor(scene, xPos, yPos, texture, carrierX, carrierY, frame){
+
+    constructor(scene, xPos, yPos, texture, carrierX, carrierY, speed, frame){
         super(scene, xPos, yPos, texture, frame)
         scene.add.existing(this)
         scene.physics.add.existing(this)
@@ -11,7 +12,7 @@ export class EnemyFighter extends Phaser.Physics.Arcade.Sprite {
         this.target = Phaser.Math.Angle.BetweenPoints(this.body.position, this.carriorPos)
         this.rotation = this.target + Math.PI/2
         let vector = new Phaser.Math.Vector2(carrierX - xPos, carrierY - yPos)
-        vector.setLength(10)
+        vector.setLength(speed)
         this.body.setVelocity(vector.x, vector.y)
     }
     update(){
