@@ -1,5 +1,4 @@
-/* THIS ONE DOESNT WORK FOR SOME REASON
-const MENUSET = {
+/* const MENUSET = {
     titlescale : 0.6,
 }
 
@@ -19,4 +18,4 @@ export class gameOver extends Phaser.Scene {
 	update(){
 
 	}
-} */
+}  */

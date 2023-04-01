@@ -35,9 +35,11 @@ window.addEventListener('load', function () {
 		},
 		autoFocus: true,
 		canvasStyle: 'display: block; width: 100%; height: 100%',
-		scene: [Game]
+		scene: [
+			Menu, Game
+		]
 	});
-	// game.scene.add("Game", Game, true);
+	
 });
 
 let carrier
@@ -45,6 +47,9 @@ let updateObjects = []
 let player
 let testEnemyFighter
 class Game extends Phaser.Scene {
+	constructor(){
+		super('Game')
+	}
 	preload() {
 		//Importing all the files
 		console.log("Preload in Game called")
