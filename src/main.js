@@ -9,6 +9,7 @@ const SETTINGS = {
 	missileScale: 0.05,
 	carrierX: 300,
 	carrierY: 300,
+	enemyFigherSpeed: 30,
 }
 window.addEventListener('load', function () {
 	var game = new Phaser.Game({
@@ -89,7 +90,7 @@ class Game extends Phaser.Scene {
 		// this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		// this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
 		this.add.image(500,500,'player-missile').setScale(SETTINGS.missileScale)
-		testEnemyFighter = new EnemyFighter(this,100,50,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale)
+		testEnemyFighter = new EnemyFighter(this,100,50,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY, SETTINGS.enemyFigherSpeed).setScale(SETTINGS.planesScale)
 		// updateObjects.push(new EnemyFighter(this,400,400,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale))
 
 		// healthbar
