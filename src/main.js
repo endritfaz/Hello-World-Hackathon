@@ -5,7 +5,7 @@ import {EnemyFighter } from './EnemyFighter.js';
 import {HealthBar} from './HealthBar.js';
 import { Waves } from './waves.js';
 import { gameOver } from './gameOver.js';
-import { EnemyMissileManager } from './ShootManager.js';
+import { EnemyMissileManager, PlayerBulletManager } from './ShootManager.js';
 
 const SETTINGS = {
 	planesScale: 0.2,
@@ -13,8 +13,6 @@ const SETTINGS = {
 	carrierX: 1280,
 	carrierY: 1280,
 	enemyFigherSpeed: 10,
-	carrierX: 300,
-	carrierY: 300,
 	enemyFigherSpeed: 0,
 	enemyFighterRange: 180,
 }
@@ -53,7 +51,12 @@ let carrier
 let updateObjects = []
 let player
 let enemyMissileManager
+let playerBulletManager
 let testEnemyFighter
+function destroy(bullet, enemy){
+	console.log("Attempting to destroy enemy")
+	enemy.destroySelf()
+}
 class Game extends Phaser.Scene {
 	constructor(){
 		super('Game')
@@ -85,27 +88,25 @@ class Game extends Phaser.Scene {
 										tileWidth: 32,
 										tileHeight: 32})
 		this.tileset = this.map.addTilesetImage('ocean','tiles')
-		
+		this.groundLayer = this.map.createLayer('Ground',this.tileset,0,0)
 
 		// Centres the camera
 		this.cameras.main.centerOn(SETTINGS.carrierX, SETTINGS.carrierY)
 		
-		this.groundLayer = this.map.createLayer('Ground',this.tileset,0,0)
+
 		
 		//Scale the player
 		carrier = new Carrier(this, SETTINGS.carrierX, SETTINGS.carrierY, 'carrier')
-		console.log(carrier.hp)
-		//this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
-		// playerSprite.setScale(SETTINGS.planesScale)
+
 		// Create player object
-		player = new Player(this, SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale).refreshBody()
-		shootManager = new ShootManager(this, SETTINGS.missileScale)
-		player = new Player(this, 300, 300).setScale(SETTINGS.planesScale).refreshBody().setRotation(Math.PI/2);
-		enemyMissileManager = new EnemyMissileManager(this, SETTINGS.missileScale)
+		playerBulletManager = new PlayerBulletManager(this)
+		player = new Player(this, SETTINGS.carrierX, SETTINGS.carrierY, playerBulletManager).setScale(SETTINGS.planesScale)
+		
+		enemyMissileManager = new EnemyMissileManager(this)
 
 		// this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		// this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
-		testEnemyFighter = new EnemyFighter(this,200,200,'enemy-fighter',
+		testEnemyFighter = new EnemyFighter(this,SETTINGS.carrierX,SETTINGS.carrierY,'enemy-fighter',
 		SETTINGS.carrierX, SETTINGS.carrierY,
 		 SETTINGS.enemyFigherSpeed, SETTINGS.enemyFighterRange, enemyMissileManager).setScale(SETTINGS.planesScale)
 		// updateObjects.push(new EnemyFighter(this,400,400,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale))
@@ -121,9 +122,10 @@ class Game extends Phaser.Scene {
 		wbar.draw()
 		shootManager = new ShootManager(this, SETTINGS.missileScale)
 		*/
+		this.physics.add.collider(playerBulletManager, testEnemyFighter, destroy)
 	}
-	update(){
-		player.update();
+	update(time, delta){
+		player.update(time, delta);
 		// Make the camera follow the player 
 		this.cameras.main.startFollow(player)
 		testEnemyFighter.update()
