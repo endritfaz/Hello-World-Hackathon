@@ -3,6 +3,9 @@ const MENUSET = {
 }
 
 export class Menu extends Phaser.Scene {
+	constructor(){
+		super('Menu')
+	}
 	preload() {
 		//Importing all the files for Menu
 		console.log("Title, Buttons")
@@ -16,8 +19,9 @@ export class Menu extends Phaser.Scene {
 		console.log("Create in Game called")
         //adding images
 		this.add.image(550,250, 'Gametitle').setScale(MENUSET.titlescale)
-        this.add.image(550,400, 'playbutton').setScale(MENUSET.titlescale)
-		
+        const playbutton = this.add.image(550,400, 'playbutton').setScale(MENUSET.titlescale);
+		playbutton.setInteractive();
+		playbutton.on('pointerdown', () => {this.scene.start('Game');});
 	}
 	update(){
 

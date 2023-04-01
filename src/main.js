@@ -2,12 +2,14 @@ import { Player } from './Player.js';
 import {Menu} from './Menu.js'
 import {Carrier} from './Carrier.js'
 import {EnemyFighter } from './EnemyFighter.js';
-
+import {HealthBar} from './HealthBar.js';
+//import { gameOver } from './gameOver';
 const SETTINGS = {
 	planesScale: 0.2,
 	missileScale: 0.05,
 	carrierX: 300,
 	carrierY: 300,
+	enemyFigherSpeed: 0,
 }
 window.addEventListener('load', function () {
 	var game = new Phaser.Game({
@@ -33,15 +35,21 @@ window.addEventListener('load', function () {
 		},
 		autoFocus: true,
 		canvasStyle: 'display: block; width: 100%; height: 100%',
-		scene: [Game]
+		scene: [
+			Menu, Game
+		]
 	});
-	// game.scene.add("Game", Game, true);
+	
 });
 
 let carrier
 let updateObjects = []
 let player
+let testEnemyFighter
 class Game extends Phaser.Scene {
+	constructor(){
+		super('Game')
+	}
 	preload() {
 		//Importing all the files
 		console.log("Preload in Game called")
@@ -78,14 +86,18 @@ class Game extends Phaser.Scene {
 		// Create player object
 		player = new Player(this, 300, 300).setScale(SETTINGS.planesScale).refreshBody().setRotation(Math.PI/2);
 		
-		this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
-		this.add.image(500,500,'player-missile').setScale(SETTINGS.missileScale)
-		updateObjects.push(new EnemyFighter(this,600,600,'enemy-fighter',).setScale(SETTINGS.planesScale))
 
-		
-		
+		// this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
+		// this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
+		this.add.image(500,500,'player-missile').setScale(SETTINGS.missileScale)
+		testEnemyFighter = new EnemyFighter(this,200,200,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY, SETTINGS.enemyFigherSpeed).setScale(SETTINGS.planesScale)
+		// updateObjects.push(new EnemyFighter(this,400,400,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale))
+
+		// healthbar
+		const hbar = new HealthBar(this, 30,650)
+		hbar.draw()
 	}
-	update() {
-		player.update();
+	update(){
+		testEnemyFighter.update()
 	}
 }
