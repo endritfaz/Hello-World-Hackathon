@@ -28,7 +28,7 @@ window.addEventListener('load', function () {
 		},
 		autoFocus: true,
 		canvasStyle: 'display: block; width: 100%; height: 100%',
-		scene: [Menu]
+		scene: [Game]
 	});
 	// game.scene.add("Game", Game, true);
 });
