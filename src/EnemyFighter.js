@@ -10,8 +10,9 @@ export class EnemyFighter extends Phaser.Physics.Arcade.Sprite {
 
         this.target = Phaser.Math.Angle.BetweenPoints(this.body.position, this.carriorPos)
         this.rotation = this.target + Math.PI/2
-        let vector = new Phaser.Math.Vector2(carrierX - xPos, carrierY)
-        this.setVelocity(new Phaser.Math.Vector2(10,10))
+        let vector = new Phaser.Math.Vector2(carrierX - xPos, carrierY - yPos)
+        vector.setLength(10)
+        this.body.setVelocity(vector.x, vector.y)
     }
     update(){
         
