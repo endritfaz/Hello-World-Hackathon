@@ -1,9 +1,14 @@
 import { Player } from './Player.js';
 import {Menu} from './Menu.js'
+import {Carrier} from './Carrier.js'
+import {EnemyFighter } from './EnemyFighter.js';
+import {HealthBar} from './HealthBar.js';
 import { gameOver } from './gameOver';
 const SETTINGS = {
 	planesScale: 0.2,
 	missileScale: 0.05,
+	carrierX: 300,
+	carrierY: 300,
 }
 window.addEventListener('load', function () {
 	var game = new Phaser.Game({
@@ -29,12 +34,14 @@ window.addEventListener('load', function () {
 		},
 		autoFocus: true,
 		canvasStyle: 'display: block; width: 100%; height: 100%',
-		scene: [gameOver]
+		scene: [Game]
 	});
 	// game.scene.add("Game", Game, true);
 });
 
-
+let carrier
+let updateObjects = []
+let player
 class Game extends Phaser.Scene {
 	preload() {
 		//Importing all the files
@@ -59,31 +66,26 @@ class Game extends Phaser.Scene {
 		console.log("Create in Game called")
 		//Loading the tilemap
 		this.map = this.make.tilemap({key: 'ocean',
-	tileWidth: 32,
-	tileHeight: 32})
+										tileWidth: 32,
+										tileHeight: 32})
 		this.tileset = this.map.addTilesetImage('ocean','tiles')
 		this.groundLayer = this.map.createLayer('Ground',this.tileset,0,0)
 		
 		//Scale the player
-		this.add.image(150,150, 'carrier')
-		// this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
+		carrier = new Carrier(this, SETTINGS.carrierX, SETTINGS.carrierY, 'carrier',)
+		console.log(carrier.hp)
+		//this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		// playerSprite.setScale(SETTINGS.planesScale)
-
-
-
-
-
-
 		// Create player object
-		// player = this.physics.add.sprite(new Player(this, 100, 450));
+		player = new Player(this, 300, 300).setScale(SETTINGS.planesScale).refreshBody();
+		
 
 		this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
 		this.add.image(500,500,'player-missile').setScale(SETTINGS.missileScale)
-		
+		updateObjects.push(new EnemyFighter(this,600,600,'enemy-fighter',).setScale(SETTINGS.planesScale))
 		
 	}
 	update(){
-
 	}
 }
