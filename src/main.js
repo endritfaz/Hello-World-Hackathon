@@ -42,7 +42,7 @@ class Game extends Phaser.Scene {
 		this.load.image('player', 'sprites/player.png')
 		this.load.image('enemy-fighter','sprites/enemy-fighter.png')
 		this.load.image('enemy-bomber','sprites/enemy-bomber.png')
-		this.load.image('player-missile.png','sprites/player-missile.png')
+		this.load.image('player-missile','sprites/player-missile.png')
 		this.load.image('bullet','sprites/bullet.png')
 
 	}
@@ -51,6 +51,8 @@ class Game extends Phaser.Scene {
 		//Scale the player
 		this.add.image(150,150, 'carrier')
 		this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
+		this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
+		this.add.image(500,500,'player-missile')
 		// playerSprite.setScale(SETTINGS.planesScale)
 		
 	}
