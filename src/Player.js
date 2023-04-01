@@ -27,8 +27,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         }
     }
     
-    // velocityFromRotation = this.physics.velocityFromRotation;
-
     update() {
         this.pointerMove(this.scene.input.activePointer);
     

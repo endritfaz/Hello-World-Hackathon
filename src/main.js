@@ -76,6 +76,9 @@ class Game extends Phaser.Scene {
 										tileWidth: 32,
 										tileHeight: 32})
 		this.tileset = this.map.addTilesetImage('ocean','tiles')
+		// the screen is a square with center at (1280,1280)
+		var SCREEN_CENTRE = 1280;
+
 		this.groundLayer = this.map.createLayer('Ground',this.tileset,0,0)
 		
 		//Scale the player
@@ -83,8 +86,10 @@ class Game extends Phaser.Scene {
 		console.log(carrier.hp)
 		//this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		// playerSprite.setScale(SETTINGS.planesScale)
+		
 		// Create player object
-		player = new Player(this, 300, 300).setScale(SETTINGS.planesScale).refreshBody().setRotation(Math.PI/2);
+		player = new Player(this, 1280, 1280).setScale(SETTINGS.planesScale).refreshBody().setRotation(Math.PI/2);
+		
 		
 
 		// this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
@@ -98,6 +103,7 @@ class Game extends Phaser.Scene {
 		hbar.draw()
 	}
 	update(){
+		player.update();
 		testEnemyFighter.update()
 	}
 }
