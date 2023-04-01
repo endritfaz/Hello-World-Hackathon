@@ -5,6 +5,8 @@ import {EnemyFighter } from './EnemyFighter.js';
 import {HealthBar} from './HealthBar.js';
 import { Waves } from './waves.js';
 import { gameOver } from './gameOver.js';
+import { EnemyMissileManager } from './ShootManager.js';
+
 const SETTINGS = {
 	planesScale: 0.2,
 	carrierX: 300,
@@ -37,7 +39,7 @@ window.addEventListener('load', function () {
 		autoFocus: true,
 		canvasStyle: 'display: block; width: 100%; height: 100%',
 		scene: [
-			gameOver,Menu, Game
+			Menu, Game, gameOver
 		]
 	});
 	
@@ -46,6 +48,7 @@ window.addEventListener('load', function () {
 let carrier
 let updateObjects = []
 let player
+let enemyMissileManager
 let testEnemyFighter
 class Game extends Phaser.Scene {
 	constructor(){
@@ -60,7 +63,8 @@ class Game extends Phaser.Scene {
 		this.load.image('player', 'sprites/player.png')
 		this.load.image('enemy-fighter','sprites/enemy-fighter.png')
 		this.load.image('enemy-bomber','sprites/enemy-bomber.png')
-		this.load.image('player-missile.png','sprites/player-missile.png')
+		this.load.image('player-missile','sprites/player-missile.png')
+		this.load.image('enemy-missile','sprites/enemy-missile.png')
 		this.load.image('bullet','sprites/bullet.png')
 		//loading the tilemap
 		this.load.image({
@@ -85,23 +89,23 @@ class Game extends Phaser.Scene {
 		//this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		// playerSprite.setScale(SETTINGS.planesScale)
 		// Create player object
-		shootManager = new ShootManager(this, SETTINGS.missileScale)
-		player = new Player(this, 300, 300).setScale(SETTINGS.planesScale).refreshBody().setRotation(Math.PI/2);
 		
+		player = new Player(this, 300, 300).setScale(SETTINGS.planesScale).refreshBody().setRotation(Math.PI/2);
+		enemyMissileManager = new EnemyMissileManager(this, SETTINGS.missileScale)
 
 		// this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		// this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
 		testEnemyFighter = new EnemyFighter(this,200,200,'enemy-fighter',
 		SETTINGS.carrierX, SETTINGS.carrierY,
-		 SETTINGS.enemyFigherSpeed, SETTINGS.enemyFighterRange, shootManager).setScale(SETTINGS.planesScale)
+		 SETTINGS.enemyFigherSpeed, SETTINGS.enemyFighterRange, enemyMissileManager).setScale(SETTINGS.planesScale)
 		// updateObjects.push(new EnemyFighter(this,400,400,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale))
 
 		// healthbar (add a decrease function for each plane)
-		const hbar = new HealthBar(this, 30,650)
-		hbar.draw()
+		// const hbar = new HealthBar(this, 30,650)
+		// hbar.draw()
 
 		//wavebar (change as per wave)
-		const wbar = new Waves(this, 1)
+		// const wbar = new Waves(this, 1)
 		// wbar.draw()
 
 	}

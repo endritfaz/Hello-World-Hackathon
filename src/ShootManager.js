@@ -22,7 +22,7 @@ export class EnemyMissile extends Phaser.Physics.Arcade.Sprite{
     }
 }
 
-export class ShootManager extends Phaser.Physics.Arcade.Group{
+export class EnemyMissileManager extends Phaser.Physics.Arcade.Group{
     constructor(scene, missileScale){
         super(scene.physics.world, scene)
         this.createMultiple({
