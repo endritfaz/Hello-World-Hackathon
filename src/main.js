@@ -2,7 +2,8 @@ import { Player } from './Player.js';
 // import {Menu} from './Menu.js'
 import {Carrier} from './Carrier.js'
 import {EnemyFighter } from './EnemyFighter.js';
-// import {HealthBar} from './HealthBar.js';
+import {HealthBar} from './HealthBar.js';
+import { Waves } from './waves.js';
 //import { gameOver } from './gameOver';
 import { ShootManager } from './ShootManager.js';
 const SETTINGS = {
@@ -88,7 +89,7 @@ class Game extends Phaser.Scene {
 		//this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		// playerSprite.setScale(SETTINGS.planesScale)
 		// Create player object
-		player = new Player(this, 300, 300).setScale(SETTINGS.planesScale).refreshBody();
+		player = new Player(this, 300, 300).setScale(SETTINGS.planesScale).refreshBody().setRotation(Math.PI/2);
 		
 
 		// this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
@@ -97,9 +98,13 @@ class Game extends Phaser.Scene {
 		testEnemyFighter = new EnemyFighter(this,200,200,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY, SETTINGS.enemyFigherSpeed).setScale(SETTINGS.planesScale)
 		// updateObjects.push(new EnemyFighter(this,400,400,'enemy-fighter',SETTINGS.carrierX, SETTINGS.carrierY).setScale(SETTINGS.planesScale))
 
-		// healthbar
+		// healthbar (add a decrease function for each plane)
 		// const hbar = new HealthBar(this, 30,650)
 		// hbar.draw()
+
+		//wavebar (change as per wave)
+		const wbar = new Waves(this, 1)
+		wbar.draw()
 		shootManager = new ShootManager(this, SETTINGS.missileScale)
 
 	}
