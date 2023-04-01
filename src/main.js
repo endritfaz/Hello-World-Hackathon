@@ -2,7 +2,8 @@ import { Player } from './Player.js';
 import {Menu} from './Menu.js'
 import {Carrier} from './Carrier.js'
 import {EnemyFighter } from './EnemyFighter.js';
-
+//import {HealthBar} from './HealthBar.js';
+//import { gameOver } from './gameOver';
 const SETTINGS = {
 	planesScale: 0.2,
 	missileScale: 0.05,
