@@ -1,4 +1,7 @@
 
+const SETTINGS = {
+	planesScale: 0.2,
+}
 window.addEventListener('load', function () {
 	var game = new Phaser.Game({
 		title: "Carrier Defense",
@@ -28,19 +31,20 @@ window.addEventListener('load', function () {
 	// game.scene.add("Game", Game, true);
 });
 
-class Game extends Phaser.Scene {
 
+class Game extends Phaser.Scene {
 	preload() {
+		//Importing all the files
 		console.log("Preload in Game called")
 		this.load.baseURL = 'assets/'
 		this.load.image('carrier','sprites/carrier.png')
-		this.load.image('player','sprites/player.png')
 	}
 	create (){
 		console.log("Create in Game called")
 		this.add.image(150,150, 'carrier')
-		this.add.image(300,300,'player')
-		console.log("Create end")
+		let playerSprite = this.add.image(300,300,'player')
+		playerSprite.setScale(SETTINGS.planesScale)
+		
 	}
 	update(){
 
