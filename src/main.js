@@ -1,6 +1,7 @@
 
 const SETTINGS = {
 	planesScale: 0.2,
+	missileScale: 0.05,
 }
 window.addEventListener('load', function () {
 	var game = new Phaser.Game({
@@ -37,23 +38,35 @@ class Game extends Phaser.Scene {
 		//Importing all the files
 		console.log("Preload in Game called")
 		this.load.baseURL = 'assets/'
-		//load sprites 
+		//load player, enemies, carrier and projectiles
 		this.load.image('carrier','sprites/carrier.png')
 		this.load.image('player', 'sprites/player.png')
 		this.load.image('enemy-fighter','sprites/enemy-fighter.png')
 		this.load.image('enemy-bomber','sprites/enemy-bomber.png')
 		this.load.image('player-missile','sprites/player-missile.png')
 		this.load.image('bullet','sprites/bullet.png')
+		//loading the tilemap
+		this.load.image({
+			key:'tiles',
+			url: 'tilemap/water1.png'
+		})
+		this.load.tilemapTiledJSON('ocean','tilemap/watermap.json')
 
 	}
 	create (){
 		console.log("Create in Game called")
+		//Loading the tilemap
+		this.map = this.make.tilemap({key: 'ocean',
+	tileWidth: 32,
+	tileHeight: 32})
+	
+		
 		//Scale the player
 		this.add.image(150,150, 'carrier')
 		this.add.image(300,300,'player').setScale(SETTINGS.planesScale)
 		this.add.image(400,400,'enemy-fighter').setScale(SETTINGS.planesScale)
-		this.add.image(500,500,'player-missile')
-		// playerSprite.setScale(SETTINGS.planesScale)
+		this.add.image(500,500,'player-missile').setScale(SETTINGS.missileScale)
+		
 		
 	}
 	update(){
