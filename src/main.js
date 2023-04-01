@@ -21,10 +21,11 @@ window.addEventListener('load', function () {
 			antialiasGL: false,
 			pixelArt: true
 		},
-		autoFocus: true
-
+		autoFocus: true,
+		canvasStyle: 'display: block; width: 100%; height: 100%',
+		scene: [Game]
 	});
-	game.scene.add("Game", Game, true);
+	// game.scene.add("Game", Game, true);
 });
 
 class Game extends Phaser.Scene {
@@ -33,10 +34,13 @@ class Game extends Phaser.Scene {
 		console.log("Preload in Game called")
 		this.load.baseURL = 'assets/'
 		this.load.image('carrier','sprites/carrier.png')
+		this.load.image('player','sprites/player.png')
 	}
 	create (){
 		console.log("Create in Game called")
-		this.add.image('carrier',50,50)
+		this.add.image(150,150, 'carrier')
+		this.add.image(300,300,'player')
+		console.log("Create end")
 	}
 	update(){
 
