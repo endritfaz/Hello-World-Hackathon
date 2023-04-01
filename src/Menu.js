@@ -1,19 +1,5 @@
-/* window.addEventListener('load', function () {
-	var game = new Phaser.Game({
-		title: "Carrier Defense Menu",
-		width: 800,
-		height: 600,
-        backgroundColor: "#CA8D16",
-
-        scale: {
-			mode: Phaser.Scale.ScaleModes.NONE,
-			width: this.window.innerWidth,
-			height: this.window.innerHeight,
-		}, 
-	});
-}); */
 const MENUSET = {
-    titlescale : 0.1,
+    titlescale : 0.6,
 }
 
 export class Menu extends Phaser.Scene {
@@ -23,11 +9,14 @@ export class Menu extends Phaser.Scene {
 		this.load.baseURL = 'assets/'
 		//load sprites 
 		this.load.image('Gametitle','sprites/GAME TITLE.png')
+        this.load.image('playbutton','sprites/PLAYBUTTON.png')
+
 	}
 	create (){
 		console.log("Create in Game called")
-		//Add The title
-		this.add.image(550,250, 'Gametitle').setScale(MENUSET, titlescale)
+        //adding images
+		this.add.image(550,250, 'Gametitle').setScale(MENUSET.titlescale)
+        this.add.image(550,400, 'playbutton').setScale(MENUSET.titlescale)
 		
 	}
 	update(){
